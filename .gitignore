@@ -1,0 +1,79 @@
+# ----------
+# User Instructions:
+# 
+# Define a function, search() that takes no input
+# and returns a list
+# in the form of [optimal path length, x, y]. For
+# the grid shown below, your function should output
+# [11, 4, 5].
+#
+# If there is no valid path from the start point
+# to the goal, your function should return the string
+# 'fail'
+# ----------
+
+# Grid format:
+#   0 = Navigable space
+#   1 = Occupied space
+
+grid = [[0, 0, 1, 0, 0, 0],
+        [0, 0, 1, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0],
+        [0, 0, 1, 1, 1, 0],
+        [0, 0, 0, 0, 1, 0]]
+
+init = [0, 0]
+goal = [len(grid)-1, len(grid[0])-1] # Make sure that the goal definition stays in the function.
+
+delta = [[-1, 0 ], # go up
+        [ 0, -1], # go left
+        [ 1, 0 ], # go down
+        [ 0, 1 ]] # go right
+
+delta_name = ['^', '<', 'v', '>']
+
+cost = 1
+
+#def search():
+    # ----------------------------------------
+    # insert code here and make sure it returns the appropriate result
+    # ----------------------------------------
+
+a0=[0, init[0],init[1]]
+b=init
+print 'initial open list:', a0
+
+
+bdown1=[b[0]+delta[2][0],b[1]+delta[2][1]]
+bright1=[b[0]+delta[3][0],b[1]+delta[3][1]]
+print 'take list term:', a0
+
+cdown1=[a0[0]+cost,bdown1[0],bdown1[1]]
+cright1=[a0[0]+cost,bright1[0],bright1[1]]
+print 'new open list:'
+print cdown1
+print cright1
+
+print 'take list term:', cdown1
+
+bdown2a=[cdown1[1]+delta[2][0],cdown1[2]+delta[2][1]]
+bright2a=[cdown1[1]+delta[3][0],cdown1[2]+delta[3][1]]
+
+cdown2a=[cdown1[0]+cost,bdown2a[0],bdown2a[1]]
+cright2a=[cdown1[0]+cost,bright2a[0],bright2a[1]]
+
+print 'new open list:'
+print cdown2a
+print cright2a
+
+print 'take this term:', cright1
+
+bdown2b=[cright1[1]+delta[2][0],cright1[2]+delta[2][1]]
+bright2b=[cright1[1]+delta[3][0],cright1[2]+delta[3][1]]
+
+cdown2b=[cright1[0]+cost,bdown2b[0],bdown2b[1]]
+cright2b=[cright1[0]+cost,bright2b[0],bright2b[1]]
+
+print 'new open list:'
+print cdown2b
+print cright2b
