@@ -38,42 +38,61 @@ cost = 1
     # ----------------------------------------
     # insert code here and make sure it returns the appropriate result
     # ----------------------------------------
+  # open list elements are of the type: [g,x,y]
 
-a0=[0, init[0],init[1]]
-b=init
-print 'initial open list:', a0
+  closed = [[ 0 for row in range(len(grid[0]))] for col in range(len(grid))]
 
+  closed[init[0]][init[1]] = 1
 
-bdown1=[b[0]+delta[2][0],b[1]+delta[2][1]]
-bright1=[b[0]+delta[3][0],b[1]+delta[3][1]]
-print 'take list term:', a0
+  x = init[0]
+  y = init[1]
+  g =0
 
-cdown1=[a0[0]+cost,bdown1[0],bdown1[1]]
-cright1=[a0[0]+cost,bright1[0],bright1[1]]
-print 'new open list:'
-print cdown1
-print cright1
+  open =[[g,x,y]]
 
-print 'take list term:', cdown1
+  found = False # flag that is set when search complete
+  resign = False # flag set if we can't find expand
 
-bdown2a=[cdown1[1]+delta[2][0],cdown1[2]+delta[2][1]]
-bright2a=[cdown1[1]+delta[3][0],cdown1[2]+delta[3][1]]
+  #print 'initial open list:'
+  #for i in range(len(open)):
+    #print '  ', open[i]
+  #print '----'
 
-cdown2a=[cdown1[0]+cost,bdown2a[0],bdown2a[1]]
-cright2a=[cdown1[0]+cost,bright2a[0],bright2a[1]]
+  while found is False and resign is False:
+  
+    # check if we still have elements on the open list
+    if len(open) == 0:
+      resign = True
+      print 'fail'
+      #print '###### Search terminated without success'
 
-print 'new open list:'
-print cdown2a
-print cright2a
+    else:
+      # remove node from list
+      open.sort()  #sort in an increase order
+      open.reverse()
+      next = open.pop()
+      #print 'take list item'
+      #print next
+      x = next[1]
+      y = next[2]
+      g = next[0]
 
-print 'take this term:', cright1
+      # check if we are done
 
-bdown2b=[cright1[1]+delta[2][0],cright1[2]+delta[2][1]]
-bright2b=[cright1[1]+delta[3][0],cright1[2]+delta[3][1]]
+      if x == goal[0] and y == goal[1]
+        found = True
+        print next
+        #print '###### Search successful'
 
-cdown2b=[cright1[0]+cost,bdown2b[0],bdown2b[1]]
-cright2b=[cright1[0]+cost,bright2b[0],bright2b[1]]
-
-print 'new open list:'
-print cdown2b
-print cright2b
+      else:
+        # expand winning element and add to new open list
+        for i in range(len(delta)):
+          x2 = x + delta[i][0]
+          y2 = y + delta[i][1]
+          if x2 >= 0 and x2 < len(grid) and y2>=0 and y2<=len(grid[0])
+            if closed[x2][y2] == 0 and grid[x2][y2] ==0:
+              g2 = g + cost
+              open.append([g2,x2,y2])
+              #print 'append list item'
+              #print [g2, x2, y2]
+              closed[x2][y2] = 1
